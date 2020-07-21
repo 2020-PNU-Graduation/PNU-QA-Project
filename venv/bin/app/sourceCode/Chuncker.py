@@ -1,8 +1,8 @@
-import MeCab
+from eunjeon import Mecab
 
 class Chuncker:
     def __init__(self):
-        self.tagger = Mecab()
+        self.tagger =  Mecab()
         self.Bi_charcter_feature = []
 
     def get_feautre(self, query):
