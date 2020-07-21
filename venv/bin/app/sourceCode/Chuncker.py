@@ -1,7 +1,8 @@
 from eunjeon import Mecab
-
+# https://github.com/koshort/pyeunjeon
 class Chuncker:
     def __init__(self):
+
         self.tagger =  Mecab()
         self.Bi_charcter_feature = []
 
