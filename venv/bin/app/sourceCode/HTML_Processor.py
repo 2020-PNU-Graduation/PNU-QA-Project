@@ -1,7 +1,6 @@
 import re
 import numpy as np
 
-
 h_tag_list = ['<h1>', '<h2>', '<h3>', '<h4>', '<h5>', '<h6>', '<h7>']
 h_tag_list2 = ['</h1>', '</h2>', '</h3>', '</h4>', '</h5>', '</h6>', '</h7>']
 
@@ -122,7 +121,7 @@ def tag2token_table(document, open_tag, close_tag, token, token2, td_setting=Fal
             if document[i:i + len(p_tag)] == p_tag:
                 table_count = 0
                 print('@@@')
-                #input()
+                # input()
 
         if i + len(open_tag) + 1 < len(document):
             if document[i] == '<' and document[i - 1 + len(open_tag)] == '>' and \
@@ -185,7 +184,7 @@ def tag2token_table(document, open_tag, close_tag, token, token2, td_setting=Fal
 
     result = result.replace('\t\t', '\t')
     result = result.replace('\a\a', '\a')
-    #print(table_count)
+    # print(table_count)
     return result, table_list
 
 
@@ -430,8 +429,8 @@ def img_tag(text):
 
     for i in range(len(text) - len(tag)):
         if text[i:i + len(tag)] == tag:
-           opened = True
-           cnt += 1
+            opened = True
+            cnt += 1
 
         if opened is True:
             tag_words += text[i]
@@ -448,8 +447,8 @@ def img_tag(text):
                     if tag_opened is True and text[j] == '>':
                         tag_opened = False
                     elif tag_opened is False:
-                       tag_words += text[j]
-                       count += 1
+                        tag_words += text[j]
+                        count += 1
 
                     if count == 30:
                         break
@@ -577,7 +576,7 @@ def get_table_data(table_text):
                                 lines_arr[i].append(word)
                         except:
                             print('error:', t_d_TK.split('\"'))
-                            #input()
+                            # input()
 
                     lines_arr[i].append(word)
                 else:
@@ -663,7 +662,7 @@ def get_table_data(table_text):
 
 
 def get_table_head(table_text, count_arr=None):
-    table_text = str(table_text).replace('\n', '').replace('\t', '').replace('\'', '\"').replace('<span>', '')\
+    table_text = str(table_text).replace('\n', '').replace('\t', '').replace('\'', '\"').replace('<span>', '') \
         .replace('</span>', '')
 
     lines = table_text.split('<tr>')
@@ -719,7 +718,7 @@ def get_table_head(table_text, count_arr=None):
 
             for t_d in TK:
                 t_d_TK = t_d.replace('</td>', '').split('>')
-                #print(t_d_TK)
+                # print(t_d_TK)
 
                 if len(t_d_TK) >= 2:
                     word = t_d_TK[1].split('</tr')[0]
@@ -732,7 +731,7 @@ def get_table_head(table_text, count_arr=None):
                                 lines_arr[i].append(word)
                         except:
                             print(t_d_TK[0].split('\"'))
-                            #input()
+                            # input()
 
                     lines_arr[i].append(word)
             span_arr.append(has_span)
@@ -831,7 +830,7 @@ def get_table_head(table_text, count_arr=None):
 
             for line in lines_arr:
                 if len(line) == depth:
-                    #print(line, depth)
+                    # print(line, depth)
                     data_arr2.append(line[0])
 
             lines_arr2.append(data_arr2)

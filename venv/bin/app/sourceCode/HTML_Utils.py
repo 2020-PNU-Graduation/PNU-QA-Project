@@ -15,8 +15,9 @@ def pre_process_document(doc, a_token1, a_token2, answer_setting=False, line_com
     cut_list = ['[a]', '원본 주소', '외부', '개인', '둘러', '위키']
 
     doc = tag2tag_token(document=doc)
-    doc, table_list = tag2token_table(document=doc, open_tag='<table>', close_tag='</table>', token='[table]', token2='[/table]',
-                          td_setting=False, answer_setting=answer_setting)
+    doc, table_list = tag2token_table(document=doc, open_tag='<table>', close_tag='</table>', token='[table]',
+                                      token2='[/table]',
+                                      td_setting=False, answer_setting=answer_setting)
     doc = tag2token_list(document=doc, open_tag='<ul>', close_tag='</ul>', token='[list]', token2='[/list]',
                          answer_setting=answer_setting)
     doc = tag_remove(doc, '<', '>')
@@ -311,7 +312,7 @@ def tag2token_table(document, open_tag, close_tag, token, token2, td_setting=Fal
             if document[i:i + len(p_tag)] == p_tag:
                 table_count = 0
                 print('@@@')
-                #input()
+                # input()
 
         if i + len(open_tag) + 1 < len(document):
             if document[i] == '<' and document[i - 1 + len(open_tag)] == '>' and \
@@ -335,7 +336,7 @@ def tag2token_table(document, open_tag, close_tag, token, token2, td_setting=Fal
                     is_opened = False
                     result += token2
 
-                    #print('@@@', table_str)
+                    # print('@@@', table_str)
                     table_list.append(table_str)
                     table_str = ''
 
@@ -375,7 +376,7 @@ def tag2token_table(document, open_tag, close_tag, token, token2, td_setting=Fal
 
     result = result.replace('\t\t', '\t')
     result = result.replace('\a\a', '\a')
-    #print(table_count)
+    # print(table_count)
     return result, table_list
 
 
@@ -628,8 +629,8 @@ def img_tag(text):
 
     for i in range(len(text) - len(tag)):
         if text[i:i + len(tag)] == tag:
-           opened = True
-           cnt += 1
+            opened = True
+            cnt += 1
 
         if opened is True:
             tag_words += text[i]
@@ -646,8 +647,8 @@ def img_tag(text):
                     if tag_opened is True and text[j] == '>':
                         tag_opened = False
                     elif tag_opened is False:
-                       tag_words += text[j]
-                       count += 1
+                        tag_words += text[j]
+                        count += 1
 
                     if count == 30:
                         break
@@ -699,7 +700,7 @@ def table_text_process(table_text):
         if table_tag is False:
             if table_text[i: i + len(table_tag_text_)] == table_tag_text_:
                 table_tag = True
-                #print(i)
+                # print(i)
         else:
             if i + len(table_tag_text) < len(table_text):
                 if table_text[i: i + len(table_tag_text)] == table_tag_text:
@@ -756,9 +757,9 @@ def get_table_data(table_text):
         if len(lines[i].split('<th')) < 3:
             TK = lines[i].replace('<th', '<td').replace('</th', '</td').split('<td')
             TK.pop(0)
-            #print('@@@@@@@@@@@@')
-            #print(TK, len(TK))
-            #input()
+            # print('@@@@@@@@@@@@')
+            # print(TK, len(TK))
+            # input()
 
             for t_d in TK:
                 t_d_TK = t_d.replace('</td>', '')
@@ -784,7 +785,7 @@ def get_table_data(table_text):
                                 lines_arr[i].append(word)
                         except:
                             print('error:', t_d_TK.split('\"'))
-                            #input()
+                            # input()
 
                     lines_arr[i].append(word)
                 else:
@@ -870,7 +871,7 @@ def get_table_data(table_text):
 
 
 def get_table_head(table_text, count_arr=None):
-    table_text = str(table_text).replace('\n', '').replace('\t', '').replace('\'', '\"').replace('<span>', '')\
+    table_text = str(table_text).replace('\n', '').replace('\t', '').replace('\'', '\"').replace('<span>', '') \
         .replace('</span>', '')
 
     lines = table_text.split('<tr>')
@@ -909,25 +910,25 @@ def get_table_head(table_text, count_arr=None):
 
     lines_arr = []
     span_arr = []
-    #print(lines)
+    # print(lines)
     for i in range(len(lines)):
         data_arr = []
         lines_arr.append(data_arr)
 
     for i in range(len(lines_arr)):
         if lines[i].find('<th') != -1:
-            #if tranposed_table is False:
+            # if tranposed_table is False:
             #    pattern = r'\<td[^)]*\</td>'
             #    lines[i] = re.sub(pattern=pattern, repl='', string=lines[i])
 
             TK = lines[i].replace('</th', '</td').replace('<th', '<td').split('<td')
-            #print('head', TK)
-            #print(lines[i])
+            # print('head', TK)
+            # print(lines[i])
             has_span = 0
 
             for t_d in TK:
                 t_d_TK = t_d.replace('</td>', '').split('>')
-                #print(t_d_TK)
+                # print(t_d_TK)
 
                 if len(t_d_TK) >= 2:
                     word = t_d_TK[1].split('</tr')[0]
@@ -940,10 +941,10 @@ def get_table_head(table_text, count_arr=None):
                                 lines_arr[i].append(word)
                         except:
                             print(t_d_TK[0].split('\"'))
-                            #input()
+                            # input()
 
                     lines_arr[i].append(word)
-                    #print(lines_arr)
+                    # print(lines_arr)
             span_arr.append(has_span)
     ###############################################################################
 
@@ -1006,7 +1007,7 @@ def get_table_head(table_text, count_arr=None):
                                     lines_arr[i + k + 1].append('')
                                 lines_arr[i + k + 1].insert(j + counts[i] + span_counts[i], word)
                                 counts[i + k + 1] += 1
-                                #print(word, i + k + 1, span_counts[i])
+                                # print(word, i + k + 1, span_counts[i])
                         except:
                             print('error!', t_d_TK[0].split('\"'))
                             # input()
@@ -1022,7 +1023,7 @@ def get_table_head(table_text, count_arr=None):
 
             for line in lines_arr:
                 if len(line) == depth:
-                    #print(line, depth)
+                    # print(line, depth)
                     data_arr2.append(line[0])
 
             lines_arr2.append(data_arr2)
@@ -1032,7 +1033,7 @@ def get_table_head(table_text, count_arr=None):
     max_num_heads = max(num_heads)
 
     if count_arr is not None:
-        #count_arr = np.array(count_arr, dtype=np.int32)
+        # count_arr = np.array(count_arr, dtype=np.int32)
         voted_Length = count_arr.argmax()
 
         if count_arr[voted_Length] > 0:
@@ -1040,7 +1041,7 @@ def get_table_head(table_text, count_arr=None):
                 if abs(len(lines_arr[i]) - voted_Length) <= 1 and abs(max_num_heads - num_heads[i]) <= 1:
                     return lines_arr[i]
 
-    #for arr in lines_arr:
+    # for arr in lines_arr:
     #    print('check')
     #    print(len(arr), arr)
 
@@ -1058,6 +1059,7 @@ def get_table_head(table_text, count_arr=None):
         return False
 
     return lines_arr[-1]
+
 
 def abs(num):
     if num < 0:
@@ -1110,6 +1112,7 @@ def overlap_table_process(table_text):
     result += '<tr>' + close_text
 
     return result, overlap_tables
+
 
 def overlap_table_process2(table_text):
     overlap_tables = []
@@ -1188,4 +1191,3 @@ def head_process(table_text):
         result += '<tr>' + line
 
     return result
-
