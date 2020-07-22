@@ -5,13 +5,20 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+
     return render_template('tableView.html')
 
-@app.route('/result',methods = ['POST','GET'])
-def result():
-    if request.method == 'POST':
-        result = result.form
-        return render_template("result.html",result = result)
+@app.route('/handle_data',methods = ['POST'])
+def handle_data():
+    projectpath = request.form['table']
+    print(projectpath)
+    return projectpath
+
+@app.route('/post', methods=['POST'])
+def post():
+    value = request.form['test']
+    print(value)
+    return value
 
 
 if __name__ == '__main__':
