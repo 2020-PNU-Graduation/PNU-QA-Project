@@ -1,11 +1,12 @@
-from HTML_Utils import get_table_head
 import re
-import Table_Holder
-from HTML_Utils import get_table_head
-from HTML_Utils import overlap_table_process
+import sourceCode.Table_Holder
+from sourceCode import Table_Holder
+from Utils.HTML_Utils import overlap_table_process
 import numpy as np
 
+
 table_holder = Table_Holder.Holder()
+
 
 file = open('test.html', 'r', encoding='utf-8')
 table_text = file.read()

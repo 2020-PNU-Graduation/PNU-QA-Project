@@ -4,6 +4,7 @@ tagger = Mecab()
 
 sentence = '아무문장이다.'
 print(tagger.morphs(sentence))
+print(tagger.nouns(sentence))
 
 #아나콘다 환경
 #python 3.6
