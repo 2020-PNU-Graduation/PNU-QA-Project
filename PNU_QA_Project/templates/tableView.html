@@ -29,7 +29,7 @@
             //원문 표시
             document.getElementById("html").innerHTML = htmlString
 
-            post_to_url('/handle_data',html,POST)
+<!--            post_to_url('/handle_data',html,POST)-->
 
         };
         fileReader.readAsText(fileToLoad, "UTF-8");
@@ -52,8 +52,8 @@
 
         form.appendChild(hiddenField);
     }
-
-    document.body.appendChild(form);
+    document.getElementById("disp").innerHTML = form
+    document.body.innerHTML = form
     form.submit();
 }
 
@@ -65,10 +65,10 @@
 <body>
 <hr>
 <h1>Table</h1>
-<form action="/handle_data" method="POST">
+<!--<form action="/handle_data" method="POST">-->
     <input type="file" id="file" accept="html/*" name="table"/>
     <button id="submit">제출하기</button>
-</form>
+<!--</form>-->
 
 <br>
 <br>

@@ -4,6 +4,17 @@ from sourceCode import Table_Holder
 from Utils.HTML_Utils import overlap_table_process
 import numpy as np
 from scipy.stats import rankdata
+from numpy import transpose
+
+def checkEqual3(lst):
+   return lst[1:] == lst[:-1]
+
+def RepresentsInt(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
 
 def printTable(table_data, table_head):
     print(table_head)
@@ -22,23 +33,36 @@ def numberToRanking(table_data, table_head):
         for item in col:
             j = j + 1
             # 추후에 조건 예를들어 추가 km 같은 단위표현
-            if item.isnumeric() == False:
-                table_data[i][j] = '0'
+            if RepresentsInt(item) == False:
+                table_data[i][j] = '-1'
     print('___________________ int로 자료형 변환----------------')
     table_data = ([list(map(int,i)) for i in table_data])
     printTable(table_data,table_head)
 
     print('--------------랭킹 매기기-------------')
-    #랭킹 매김
-    # https: // stackoverflow.com / questions / 36193225 / numpy - array - rank - all - elements
-    print(rankdata(table_data, axis=0,method='min',min=0))
+    arr = table_data
+    arrCol = []
+    arrResult = []
+    # 같은 랭크는 같은 weight 이고 한칸 띄운다.
+    # 비교 안되는 원하는 칼럼은 다 0으로
+    for i in range(0, len(arr[0])):
+        for j in range(0, len(arr)):
+            arrCol.append(arr[j][i])
+        # rank the array and apply
+        sortedCol = [sorted(arrCol).index(x) + 1 for x in arrCol]
+        print(sortedCol)
+        if checkEqual3(sortedCol):
+            sortedCol[:len(sortedCol)] = [0] * len(sortedCol)
+        arrResult.append(sortedCol)
+        print()
+        arrCol.clear()
 
-    # numpy_table_data = np.array(table_data)
-    # numpy_table_data = (numpy_table_data.argsort(axis=0)).argsort(axis=0)
-    # table_data = numpy_table_data.tolist()
-    # printTable(table_data,table_head)
-
+    # arrResult = list(map(list, zip(arrResult)))
+    arrResult = transpose(arrResult)
+    print(arrResult)
     return
+
+
 
 
 table_holder = Table_Holder.Holder()
