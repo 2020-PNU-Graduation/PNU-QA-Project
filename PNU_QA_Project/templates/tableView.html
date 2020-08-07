@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Table</title>
+    <title>{{ title }}</title>
 
     <script type="text/javascript">
 	window.onload = function() {
@@ -29,53 +29,26 @@
             //원문 표시
             document.getElementById("html").innerHTML = htmlString
 
-<!--            post_to_url('/handle_data',html,POST)-->
-
         };
         fileReader.readAsText(fileToLoad, "UTF-8");
     }
-
-    function post_to_url(path, params, method) {
-    method = method || "post"; // 전송 방식 기본값을 POST로
-
-
-    var form = document.createElement("form");
-    form.setAttribute("method", method);
-    form.setAttribute("action", path);
-
-    //히든으로 값을 주입시킨다.
-    for(var key in params) {
-        var hiddenField = document.createElement("input");
-        hiddenField.setAttribute("type", "hidden");
-        hiddenField.setAttribute("name", key);
-        hiddenField.setAttribute("value", params[key]);
-
-        form.appendChild(hiddenField);
-    }
-    document.getElementById("disp").innerHTML = form
-    document.body.innerHTML = form
-    form.submit();
-}
-
-
-
     </script>
 
 </head>
 <body>
 <hr>
 <h1>Table</h1>
-<!--<form action="/handle_data" method="POST">-->
-    <input type="file" id="file" accept="html/*" name="table"/>
+<form action="/getTableData" method="POST">
+    <input type="file" id="file" accept="html/*" name="tableData"/>
     <button id="submit">제출하기</button>
-<!--</form>-->
+</form>
 
 <br>
 <br>
 <hr>
-<div id="disp">표 출력</div>
+<div id="disp"> {{ table }}</div>
 <h2>Question</h2>
-  <form action="/post" method="post">
+  <form action="/postQuestion" method="post">
         <p>질문입력해주세요 : <input type="text" name="test"></p>
         <input type="submit" value="질문하기">
     </form>
@@ -83,7 +56,9 @@
 <br>
 <hr>
 <h2>Answer</h2>
-<div id="html">원문 출력</div>
+<div>받은 질문 : {{ question }}</div>
+<br>
+<div id="html">예측된 정답 : {{ answer }}</div>
 
 </body>
 </html>
