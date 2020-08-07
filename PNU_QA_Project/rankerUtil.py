@@ -62,11 +62,8 @@ def numberToRanking(table_data, table_head):
     print(arrResult)
     return
 
-
-
-
 table_holder = Table_Holder.Holder()
-file = open('test.html', 'r', encoding='utf-8')
+file = open('tableExampleHTMLCode/test.html', 'r', encoding='utf-8')
 table_text = file.read()
 table_text, overlap_table_texts = overlap_table_process(table_text=table_text)
 
